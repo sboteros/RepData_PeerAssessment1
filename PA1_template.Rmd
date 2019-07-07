@@ -9,6 +9,11 @@ output:
 bibliography: bibliography.bib
 ---
 
+```{r settings}
+  knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+
 # Introduction
 
 This report uses data obtained from an anonymous individual whose daily activity
@@ -21,7 +26,7 @@ differences on activity between week-days and weekend-days.
 
 # Software
 
-```{r packages, echo = FALSE, message = FALSE, warning = FALSE}
+```{r packages, echo = FALSE}
   paquetes <- c("dplyr", "tidyr", "ggplot2", "lubridate", "here")
   for (i in paquetes) {
     if (!require(i, character.only = TRUE)) {install.packages(i)}
@@ -78,19 +83,28 @@ initial time of each time-span.
 ```
 
 In the following plot is depicted the number of days in which the individual
-walked each number of steps. It's intersting to note that the mean value 
+walked each number of steps. It's interesting to note that the mean value 
 (vertical black line) is in a bin just observed in one day, and corresponds to
-`r mean(mean_steps$total, na.rm = TRUE)`. Each day, this individual walked
-between `r range(mean_steps$total, na.rm = TRUE)[1]` and 
-`r range(mean_steps$total, na.rm = TRUE)[2]` steps.
+`r mean(total_steps$total, na.rm = TRUE)`. Each day, this individual walked
+between `r range(total_steps$total, na.rm = TRUE)[1]` and 
+`r range(total_steps$total, na.rm = TRUE)[2]` steps.
 
-```{r mean_steps_histo, message = FALSE}
+```{r mean_steps_histo}
+  # Create figure/ directory
+  if (!dir.exists(here(".", "figure"))) {dir.create(here(".", "figure"))}
+
+  # Export the graph
+  png(here(".", "figure", "mean_steps_histo.png"))
   ggplot(total_steps, aes(total)) + 
     geom_histogram() + 
     geom_vline(aes(xintercept = mean(total, na.rm = TRUE))) +
     labs(title = "Total number of steps taken per day",
          x = "Number of steps", y = "Number of days") + 
     theme_bw()
+  dev.off()
+  
+  # Include the graph
+  knitr::include_graphics(here(".", "figure", "mean_steps_histo.png"))
 ```
 
 ## What is the average daily activity pattern?
@@ -116,12 +130,17 @@ In the following graph we ploted the daily mean of total steps during the
 period.
 
 ```{r mean_steps_line}
+  # Export graph
+  png(here(".", "figure", "mean_steps_line.png"))
   ggplot(statistics, aes(x = date, y = mean)) +
     geom_line() +
     labs(title = "Mean steps taken each day",
          x = "Date", y = "Mean steps",
          caption = "Note: Mean and median steps taken each day are the same.") +
     theme_bw()
+  dev.off()
+  # Include the graph
+  knitr::include_graphics(here(".", "figure", "mean_steps_line.png"))
 ```
 
 In the following graph we observe the average number of steps taken in each 
@@ -130,17 +149,23 @@ from 00:00 to 05:00 this individual do not use to walk (or data is missing), and
 that the most intensive walking activity take place aproximately at 08:00. 
 
 ```{r max_steps_line}
+  # Compute maximum steps
   max_steps <- walking %>%
     ungroup() %>%
     group_by(interval) %>% 
     summarize(mean = mean(steps, na.rm = TRUE)) %>%
     mutate(time = seconds_to_period(interval * 5 * 60))
+  # Export graph
+  png(here(".", "figure", "max_steps_line.png"))
   ggplot(max_steps, aes(x = time, y = mean)) + 
     geom_line() + 
     theme_bw() +
     scale_x_time(breaks = seconds_to_period(seq(1, 24, by = 4) * 60^2)) + 
     labs(title = "Average steps in a 5-minutes time-span",
          x = "Time of the day", y = "Average steps")
+  dev.off()
+  # Include the graph
+  knitr::include_graphics(here(".", "figure", "max_steps_line.png"))
 ```
 
 As a matter of fact, the most active 5-minute time-span, on average, is
@@ -161,6 +186,7 @@ the time of meassurment, since the missing values represent
 activity.
 
 ```{r missing_line}
+  # Compute missings
   missing <- walking %>%
     ungroup() %>%
     group_by(interval) %>% 
@@ -168,6 +194,8 @@ activity.
               prop_missing = mean(is.na(steps)) * 100) %>%
     gather(key = "measure", value = "value", mean_steps, prop_missing) %>%
     mutate(time = seconds_to_period(interval * 5 * 60))
+  # Export graph
+  png(here(".", "figure", "missing_line.png"))
   ggplot(missing, aes(x = time, y = value)) + 
     geom_line() + 
     facet_grid(measure ~ ., scales = "free") +
@@ -175,6 +203,9 @@ activity.
     scale_x_time(breaks = seconds_to_period(seq(1, 24, by = 4) * 60^2)) + 
     labs(title = "Average steps in a 5-minutes time-span and missing proportion",
          x = "Time of the day")
+  dev.off()
+  # Include the graph
+  knitr::include_graphics(here(".", "figure", "missing_line.png"))
 ```
 
 We continued analysing why the proportion of missing values were the same
@@ -203,7 +234,9 @@ time-span average.
 
 Bellow, is shown a histogram with the steps after imputing missing values.
 
-```{r mean_steps_histo, message = FALSE}
+```{r mean_steps_histo2}
+  # Export graph
+  png(here(".", "figure", "mean_steps_histo2.png"))
   walking2 %>%
     group_by(date) %>%
     summarize(total = sum(steps)) %>%
@@ -214,6 +247,9 @@ Bellow, is shown a histogram with the steps after imputing missing values.
          x = "Number of steps", y = "Number of days",
          caption = "Note: Missing values imputed as time-spans averages") + 
     theme_bw()
+  dev.off()
+  # Include the graph
+  knitr::include_graphics(here(".", "figure", "mean_steps_histo2.png"))
 ```
 
 ## Are there differences in activity patterns between weekdays and weekends?
@@ -224,7 +260,7 @@ than in weekdays, but the weekend activity has more spikes than the weekday one.
 One different approach for imputing data, would be imputing by average 
 time-spans, by controlling for differences in the days of the week.
 
-```{r weekdays, message = FALSE}
+```{r weekdays}
   # Set locale to a common language
   Sys.setlocale(locale = "English")
 
@@ -238,7 +274,8 @@ time-spans, by controlling for differences in the days of the week.
     ungroup %>%
     mutate(time = seconds_to_period(interval * 60 * 5))
   
-  # Plotting a comparrissong
+  # Export graph
+  png(here(".", "figure", "weekdays.png"))
   ggplot(weekly, aes(x = time, y = mean)) + 
     geom_line() + 
     facet_grid(. ~ weekdays) +
@@ -246,6 +283,10 @@ time-spans, by controlling for differences in the days of the week.
     scale_x_time(breaks = seconds_to_period(seq(1, 24, by = 8) * 60^2)) + 
     labs(title = "Average steps in a 5-minutes time-span, by weekends and others",
          x = "Time of the day")
+  dev.off()
+  
+  # Include the graph
+  knitr::include_graphics(here(".", "figure", "weekdays.png"))
 ```
 
 ## References
