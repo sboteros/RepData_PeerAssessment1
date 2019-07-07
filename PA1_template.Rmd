@@ -102,10 +102,8 @@ between `r range(total_steps$total, na.rm = TRUE)[1]` and
          x = "Number of steps", y = "Number of days") + 
     theme_bw()
   dev.off()
-  
-  # Include the graph
-  knitr::include_graphics(here(".", "figure", "mean_steps_histo.png"))
 ```
+![Mean steps histogram](./figure/mean_steps_histo.png)
 
 ## What is the average daily activity pattern?
 
@@ -139,9 +137,9 @@ period.
          caption = "Note: Mean and median steps taken each day are the same.") +
     theme_bw()
   dev.off()
-  # Include the graph
-  knitr::include_graphics(here(".", "figure", "mean_steps_line.png"))
 ```
+
+![Daily mean steps](./figure/mean_steps_line.png)
 
 In the following graph we observe the average number of steps taken in each 
 5-minute time-span by the individual. Here, we can observe that, on average, 
@@ -164,9 +162,9 @@ that the most intensive walking activity take place aproximately at 08:00.
     labs(title = "Average steps in a 5-minutes time-span",
          x = "Time of the day", y = "Average steps")
   dev.off()
-  # Include the graph
-  knitr::include_graphics(here(".", "figure", "max_steps_line.png"))
 ```
+
+![Time-span average steps](./figure/max_steps_line.png)
 
 As a matter of fact, the most active 5-minute time-span, on average, is
 the one shown in the followig table.
@@ -204,10 +202,10 @@ activity.
     labs(title = "Average steps in a 5-minutes time-span and missing proportion",
          x = "Time of the day")
   dev.off()
-  # Include the graph
-  knitr::include_graphics(here(".", "figure", "missing_line.png"))
 ```
 
+![Missing values](./figure/missing_line.png)
+  
 We continued analysing why the proportion of missing values were the same
 across all time-spans in the period, and noted that all missing values were in
 specific days, and that all the registries of these days were missing. This
@@ -248,10 +246,10 @@ Bellow, is shown a histogram with the steps after imputing missing values.
          caption = "Note: Missing values imputed as time-spans averages") + 
     theme_bw()
   dev.off()
-  # Include the graph
-  knitr::include_graphics(here(".", "figure", "mean_steps_histo2.png"))
 ```
 
+![Mean steps histogram (imputed)](./figure/mean_steps_histo2.png)
+  
 ## Are there differences in activity patterns between weekdays and weekends?
 
 In the following plot we noted that, on average, weekday and weekend walking
@@ -284,10 +282,9 @@ time-spans, by controlling for differences in the days of the week.
     labs(title = "Average steps in a 5-minutes time-span, by weekends and others",
          x = "Time of the day")
   dev.off()
-  
-  # Include the graph
-  knitr::include_graphics(here(".", "figure", "weekdays.png"))
 ```
+
+![Weekdays](./figure/weekdays.png)
 
 ## References
 

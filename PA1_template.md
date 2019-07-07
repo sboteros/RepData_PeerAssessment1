@@ -105,13 +105,7 @@ between 0 and
 ## png 
 ##   2
 ```
-
-```r
-  # Include the graph
-  knitr::include_graphics(here(".", "figure", "mean_steps_histo.png"))
-```
-
-<img src="C:/Users/sbote/OneDrive/Documentos/DataScienceSpecialization/5 Reproducible research/Week2/RepData_PeerAssessment1/./figure/mean_steps_histo.png" width="480" />
+![Mean steps histogram](./figure/mean_steps_histo.png)
 
 ## What is the average daily activity pattern?
 
@@ -150,12 +144,7 @@ period.
 ##   2
 ```
 
-```r
-  # Include the graph
-  knitr::include_graphics(here(".", "figure", "mean_steps_line.png"))
-```
-
-<img src="C:/Users/sbote/OneDrive/Documentos/DataScienceSpecialization/5 Reproducible research/Week2/RepData_PeerAssessment1/./figure/mean_steps_line.png" width="480" />
+![Daily mean steps](./figure/mean_steps_line.png)
 
 In the following graph we observe the average number of steps taken in each 
 5-minute time-span by the individual. Here, we can observe that, on average, 
@@ -186,12 +175,7 @@ that the most intensive walking activity take place aproximately at 08:00.
 ##   2
 ```
 
-```r
-  # Include the graph
-  knitr::include_graphics(here(".", "figure", "max_steps_line.png"))
-```
-
-<img src="C:/Users/sbote/OneDrive/Documentos/DataScienceSpecialization/5 Reproducible research/Week2/RepData_PeerAssessment1/./figure/max_steps_line.png" width="480" />
+![Time-span average steps](./figure/max_steps_line.png)
 
 As a matter of fact, the most active 5-minute time-span, on average, is
 the one shown in the followig table.
@@ -246,13 +230,8 @@ activity.
 ##   2
 ```
 
-```r
-  # Include the graph
-  knitr::include_graphics(here(".", "figure", "missing_line.png"))
-```
-
-<img src="C:/Users/sbote/OneDrive/Documentos/DataScienceSpecialization/5 Reproducible research/Week2/RepData_PeerAssessment1/./figure/missing_line.png" width="480" />
-
+![Missing values](./figure/missing_line.png)
+  
 We continued analysing why the proportion of missing values were the same
 across all time-spans in the period, and noted that all missing values were in
 specific days, and that all the registries of these days were missing. This
@@ -311,13 +290,8 @@ Bellow, is shown a histogram with the steps after imputing missing values.
 ##   2
 ```
 
-```r
-  # Include the graph
-  knitr::include_graphics(here(".", "figure", "mean_steps_histo2.png"))
-```
-
-<img src="C:/Users/sbote/OneDrive/Documentos/DataScienceSpecialization/5 Reproducible research/Week2/RepData_PeerAssessment1/./figure/mean_steps_histo2.png" width="480" />
-
+![Mean steps histogram (imputed)](./figure/mean_steps_histo2.png)
+  
 ## Are there differences in activity patterns between weekdays and weekends?
 
 In the following plot we noted that, on average, weekday and weekend walking
@@ -364,12 +338,7 @@ time-spans, by controlling for differences in the days of the week.
 ##   2
 ```
 
-```r
-  # Include the graph
-  knitr::include_graphics(here(".", "figure", "weekdays.png"))
-```
-
-<img src="C:/Users/sbote/OneDrive/Documentos/DataScienceSpecialization/5 Reproducible research/Week2/RepData_PeerAssessment1/./figure/weekdays.png" width="480" />
+![Weekdays](./figure/weekdays.png)
 
 ## References
 
